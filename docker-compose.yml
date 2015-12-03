@@ -1,6 +1,8 @@
-basepython:
+api:
     build: .
-    command: "true"
+    hostname: api
+    log_driver: "syslog"
+    command: ./startup.sh
     volumes:
         - .:/app
         - ./config:/config
@@ -11,19 +13,12 @@ basepython:
         - 8.8.4.4
     env_file:
         - .env
-
-api:
-    extends:
-        service: basepython
-    hostname: api
-    log_driver: "syslog"
-    command: gunicorn -c /config/gunicorn.conf wsgi:app
-    expose:
+    ports:
         - "8000:8000"
 
 nginx:
     image: nginx:1.7
-    log_driver: "syslog"
+    #log_driver: "syslog"
     links:
         - api:backend
     volumes:

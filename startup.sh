@@ -2,4 +2,4 @@
 
 #python manage.py create_pdf
 
-gunicorn -c /config/gunicorn.conf wsgi:app
+gunicorn -c /config/gunicorn.conf wsgi:app --reload
